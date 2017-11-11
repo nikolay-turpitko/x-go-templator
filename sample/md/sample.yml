@@ -1,0 +1,17 @@
+# Sample data file
+
+todo:
+    - Fri:
+        - have some fun
+        - watch movies
+        - drink beer
+    - Sat:
+        - go cycling
+        - spent time with family
+        - read to daugter a fairytale
+    - Sun:
+        - go swimming
+        - have some more fun
+        - rest
+    - В новом году:
+        - купить новый велосипед

@@ -1,0 +1,38 @@
+invoice:
+
+  agreementDate: 2017-07-15
+
+  serviceProviderFull:
+    en: Ivan Ivanov (Solo proprietor)
+    ru: Иван Иванович Иванов (Индивидуальный предприниматель)
+  serviceProviderShort:
+    en: Ivan Ivanov
+    ru: ИП Иван Иванов
+  customer:
+    en: Very Nice Company, LLC
+    ru: Очень Хорошая Компания, ООО
+
+  bankDetails:
+    beneficiary:
+      name: IP IVAN IVANOVICH IVANOV
+      account: 99999999999999999999
+      transitAccount: 88888888888888888888
+      bankName: Pivkoff Bank
+      swift: XXXXXXXXXXX
+      bankAddress: Some street, 42, Moscow, Russia
+    intermediary:
+      bankName: SOME BANK, SOMEWHERE IN NEW YORK, NY US
+      swift: YYYYYYYYYYY
+      bankAddress: SOME BANK, SOMEWHERE IN NEW YORK, NY US
+      account: 888888888
+
+  services:
+    - description:
+        en: Software development services
+        ru: Услуги по разработке программного обеспечения
+      rate: 22.22
+      hours: BilledHours
+    - description:
+        en: Additional technical support during official public hoidays (mutually agreed fixed amount)
+        ru: Дополнительная техподдержка во время официальных выходных и праздничных дней (фиксированная оплата по взаимной договоренности)
+      amount: AdditionalAmount

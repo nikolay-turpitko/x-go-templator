@@ -1,0 +1,18 @@
+package: github.com/nikolay-turpitko/x-go-templator
+import:
+- package: github.com/nikolay-turpitko/structor
+  version: ^1.1.2
+  subpackages:
+  - funcs/bytes
+  - funcs/crypt
+  - funcs/encoding
+  - funcs/goquery
+  - funcs/math
+  - funcs/os
+  - funcs/regexp
+  - funcs/strings
+  - funcs/use
+  - funcs/xpath
+- package: github.com/yosssi/ace
+  version: ^0.0.5
+- package: gopkg.in/yaml.v2

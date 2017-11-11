@@ -1,0 +1,23 @@
+# {{.Args.Title}}
+
+This template generates markdown file.
+It illustrates passing data to template via CLI, ENV and YAML.
+
+## TODO list (from data file)
+
+{{range $v := .Data.todo}}
+{{- range $k, $v := $v -}}
+### {{$k}}
+{{range $v}}
+- {{.}}
+{{- end}}
+{{end}}
+{{end -}}
+
+## ENV vars (with names no more than 5 chars and values no more than 30 chars long)
+
+{{range $k, $v := .Env}}
+{{- if and (le (len $k) 5) (le (len $v) 30)}}
+{{$k}}: {{$v}}
+{{end}}
+{{- end}}

@@ -1,0 +1,39 @@
+hash: 65186570b9cd1764787aa3dc329ff423ca160924f5e71353ac37731b42264d65
+updated: 2017-11-11T15:21:48.327090041+07:00
+imports:
+- name: github.com/andybalholm/cascadia
+  version: 349dd0209470eabd9514242c688c403c0926d266
+- name: github.com/gtank/cryptopasta
+  version: 1f550f6f2f69009f6ae57347c188e0a67cd4e500
+- name: github.com/nikolay-turpitko/structor
+  version: 8b3794172be900f415c8792ba93f3016e87f8cff
+  subpackages:
+  - funcs/bytes
+  - funcs/crypt
+  - funcs/encoding
+  - funcs/goquery
+  - funcs/math
+  - funcs/os
+  - funcs/regexp
+  - funcs/strings
+  - funcs/use
+  - funcs/xpath
+- name: github.com/PuerkitoBio/goquery
+  version: e1271ee34c6a305e38566ecd27ae374944907ee9
+- name: github.com/yosssi/ace
+  version: ea038f4770b6746c3f8f84f14fa60d9fe1205b56
+- name: golang.org/x/crypto
+  version: 6a293f2d4b14b8e6d3f0539e383f6d0d30fce3fd
+  subpackages:
+  - bcrypt
+  - blowfish
+- name: golang.org/x/net
+  version: a337091b0525af65de94df2eb7e98bd9962dcbe2
+  subpackages:
+  - html
+  - html/atom
+- name: gopkg.in/xmlpath.v2
+  version: 860cbeca3ebcc600db0b213c0e83ad6ce91f5739
+- name: gopkg.in/yaml.v2
+  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
+testImports: []

@@ -1,0 +1,98 @@
+html
+  head
+    title Invoice #{{.Args.Number}}
+    meta charset=utf-8
+    link rel=stylesheet href=stylesheet.css type=text/css charset=utf-8
+    = css
+      h1 {
+        color: red;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table, th, td {
+        border: 1px solid black;
+      }
+      body {
+        font-family: 'liberation_sans_narrow';
+      }
+  body
+
+    h1 Invoice / Счет #{{.Args.Number}}
+
+    / Preamble
+
+    table
+      tr
+        th Date of Invoice
+        td {{.Args.On}}
+        th Service Agreement date
+        td {{.Data.invoice.agreementDate}}
+      tr
+        th Дата выставления счета
+        td {{.Args.On}}
+        th Договор на предоставление услуг от
+        td {{.Data.invoice.agreementDate}}
+
+    br
+
+    table
+      tr
+        th Service Provider
+        td {{.Data.invoice.serviceProviderFull.en}}
+      tr
+        th Поставщик услуг
+        td {{.Data.invoice.serviceProviderFull.ru}}
+      tr
+        th Customer
+        td {{.Data.invoice.customer.en}}
+      tr
+        th Заказчик
+        td {{.Data.invoice.customer.ru}}
+
+    br
+
+    / Details
+
+    table
+      tr
+        th Service description
+        th Hours
+        th Price per hour
+        th Line Total
+      tr
+        th Наименование услуг
+        th Часов
+        th Стоимость в час
+        th Сумма
+      {{set "total" 0.0}}
+      {{range .Data.invoice.services}}
+      tr
+        td {{.description.en}}
+        / Indirect indexing: row in the yaml contains index of arg in cmd line.
+        / This is done to override value in yaml with value from cmd line.
+        {{$h := or (s_atoi (or (index $.Args (print .hours)) "0")) .hours 0}}
+        {{$r := or (s_atoi (or (index $.Args (print .rate)) "0")) .rate 0}}
+        {{$a := or (s_atoi (or (index $.Args (print .amount)) "0")) .amount 0}}
+        {{$s := or $a (m_mul $r $h)}}
+        {{set "total" (m_add $.Vars.total $s)}}
+        td rowspan=2 {{or $h "—"}}
+        td rowspan=2 {{or $r "—"}}
+        td rowspan=2 {{$s}}
+      tr
+        td {{.description.ru}}
+      {{end}}
+      tr
+        td rowspan=3
+        td colspan=2 Subtotal / Промежуточный итог
+        td {{$.Vars.total}}
+      tr
+        td colspan=2 No VAT / Без НДС
+        td —
+      tr
+        th colspan=2 TOTAL / ИТОГО
+        td {{$.Vars.total}}
+
+
+      br
