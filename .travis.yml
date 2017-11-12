@@ -8,6 +8,7 @@ env:
     ICU_LIB: /usr
 sudo: required
 before_install:
+    - sudo apt-get -y purge libicu-dev icu-devtools
     - ./.build/install-icu4c.sh
     - sudo add-apt-repository -y ppa:masterminds/glide
     - sudo apt-get -qq update
