@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nikolay-turpitko/x-go-templator.svg?branch=master)](https://travis-ci.org/nikolay-turpitko/x-go-templator)
+
 # x-go-templator
 
 ## What?
