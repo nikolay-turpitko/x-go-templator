@@ -1,12 +1,29 @@
+# Below line is for Mac
+# export ICU_LIB = /usr/local/opt/icu4c
 
-all: md-pdf ace-pdf
+# Below line is tested on Ubuntu 16.04
+export ICU_LIB = /usr
+export CGO_CFLAGS += -I${ICU_LIB}/include
+export CGO_LDFLAGS += -L${ICU_LIB}/lib -licui18n -licuuc -licudata
+
+all: clean test build md-pdf ace-pdf
+
+clean:
+	@-rm ./x-go-templator 2> /dev/null || :
+	@-rm -r ./out 2> /dev/null || :
+
+test:
+	@go test -v $$(glide nv)
+
+build:
+	@go build
 
 md-pdf:
 	@echo
 	@echo "Generating pdf using markdown template..."
 	@echo "Required tools: make, go, pandoc"
 	@mkdir -p out
-	@go run x-go-templator.go \
+	@./x-go-templator \
 		-template sample/md/sample.tmpl \
 		-data sample/md/sample.yml \
 		Title="Markdown generation example" \
@@ -30,7 +47,7 @@ ace-pdf:
 	@echo "Required tools: make, go, wkhtmltopdf"
 	@mkdir -p out
 	@cp sample/ace/stylesheet.css out
-	@go run x-go-templator.go \
+	@./x-go-templator \
 		-template sample/ace/invoice.ace \
 		-data sample/ace/invoice.yml \
 		Number=5 \

@@ -86,13 +86,24 @@ html
       tr
         td rowspan=3
         td colspan=2 Subtotal / Промежуточный итог
-        td {{$.Vars.total}}
+        td {{.Vars.total}}
       tr
         td colspan=2 No VAT / Без НДС
         td —
       tr
         th colspan=2 TOTAL / ИТОГО
-        td {{$.Vars.total}}
+        td {{.Vars.total}}
 
+    br
 
-      br
+    / Spelled out amount
+
+    strong Total sum:&nbsp;
+    span {{spellCurrency "en" .Vars.total "USD"}}
+
+    br
+
+    strong Итого:&nbsp;
+    span {{spellCurrency "ru" .Vars.total "USD"}}
+
+    br

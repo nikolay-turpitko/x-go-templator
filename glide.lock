@@ -1,8 +1,16 @@
-hash: 65186570b9cd1764787aa3dc329ff423ca160924f5e71353ac37731b42264d65
-updated: 2017-11-11T15:21:48.327090041+07:00
+hash: 79b16be9707e6acf94cef88741918de48621fbc3bc3c4e76a06137a175a8abe9
+updated: 2017-11-12T21:54:49.609925346+07:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
+- name: github.com/go-playground/locales
+  version: e4cbcb5d0652150d40ad0646651076b6bd2be4f6
+  subpackages:
+  - currency
+  - en
+  - ru
+- name: github.com/go-playground/universal-translator
+  version: b32fa301c9fe55953584134cb6853a13c87ec0a1
 - name: github.com/gtank/cryptopasta
   version: 1f550f6f2f69009f6ae57347c188e0a67cd4e500
 - name: github.com/nikolay-turpitko/structor
@@ -20,6 +28,10 @@ imports:
   - funcs/xpath
 - name: github.com/PuerkitoBio/goquery
   version: e1271ee34c6a305e38566ecd27ae374944907ee9
+- name: github.com/stretchr/testify
+  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  subpackages:
+  - assert
 - name: github.com/yosssi/ace
   version: ea038f4770b6746c3f8f84f14fa60d9fe1205b56
 - name: golang.org/x/crypto
@@ -36,4 +48,12 @@ imports:
   version: 860cbeca3ebcc600db0b213c0e83ad6ce91f5739
 - name: gopkg.in/yaml.v2
   version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
-testImports: []
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 6d212800a42e8ab5c146b8ace3490ee17e5225f9
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
+  subpackages:
+  - difflib

@@ -4,11 +4,15 @@ go:
     - 1.7.x
     - 1.8.x
     - tip
+env:
+    ICU_LIB: /usr
 sudo: required
 before_install:
+    - ./.build/install-icu4c.sh
     - sudo add-apt-repository -y ppa:masterminds/glide
     - sudo apt-get -qq update
     - sudo apt-get -y install glide
+    - sudo apt-get -y install libicu-dev
 install:
     - glide i
 script:

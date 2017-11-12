@@ -37,9 +37,12 @@ Program use template file extension as a hint which engine to use:
 
 Refer .travis.yml for build requrements and steps.
 
+Note: to install ICU lib, you may use script `.build/install-icu4c.sh`.  But I
+had to remove existing icu-devtools installation, because of conflict (`sudo
+apt purge icu-devtools`).
+
 TODO: check if it goes to go/bin
 TODO: probably, add a link to binary, built by Travis?
-TODO: icu-project.org
 
 ### Create a template file and (optionally) a data file
 
@@ -58,9 +61,9 @@ your templates (see samples).
 
 Use samples to get an idea.
 
-Note: Makefile in this project used as a usage example, not as a build tool.
-Take a look at it to have an idea how to generate pdf files and use command line
-arguments in the templates.
+BTW, Makefile in this project can be viewed not only as build tool, but also as
+a tool usage example.  Take a look at it to have an idea how to generate pdf
+files and use command line arguments in the templates.
 
 ## Additional documentation:
 
