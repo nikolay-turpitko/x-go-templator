@@ -13,7 +13,8 @@ before_install:
     - sudo apt-get -qq update
     - sudo apt-get -y install glide
     - sudo apt-get -y install libicu-dev
+    - sudo apt-get -y install pandoc wkhtmltopdf
 install:
     - glide i
 script:
-    - go build
+    - make

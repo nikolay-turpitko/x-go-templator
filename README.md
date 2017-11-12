@@ -41,6 +41,9 @@ Note: to install ICU lib, you may use script `.build/install-icu4c.sh`.  But I
 had to remove existing icu-devtools installation, because of conflict (`sudo
 apt purge icu-devtools`).
 
+I borrowed this script and ICU lib binding approach from
+https://github.com/uber-go/icu4go. Refer it for details.
+
 TODO: check if it goes to go/bin
 TODO: probably, add a link to binary, built by Travis?
 
