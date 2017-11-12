@@ -2,7 +2,7 @@
 # export ICU_LIB = /usr/local/opt/icu4c
 
 # Below line is tested on Ubuntu 16.04
-export ICU_LIB = /usr
+#export ICU_LIB = /usr
 export CGO_CFLAGS += -I${ICU_LIB}/include
 export CGO_LDFLAGS += -L${ICU_LIB}/lib -licui18n -licuuc -licudata
 
