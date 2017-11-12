@@ -9,6 +9,10 @@
 I wrote it to automate creation of invoices. But it is able to create another
 types of simple one or several page reports as well.
 
+**TL;DR** It's an experimental project (so, "x-" prefix in the name).
+I'm doing it for my own needs and fun. PRs are welcome, but I have no time
+(and intention) for providing good docs and support.
+
 Think about it like about Go `text/template` engine plus YAML file parser
 wrapped as a CLI tool. Not much more than that.
 
@@ -30,6 +34,20 @@ Program use template file extension as a hint which engine to use:
 - .ace  -> "https://github.com/yosssi/ace"
 - .html -> "html/template"
 - .\*   -> "html/text"
+
+**BTW**, project illustrates:
+
+- quite involved usage of template engines (with custom functions, scripting and access to ENV and CLI vars);
+- usege of icu4c lib via cgo binding;
+- spelling numbers to English and Russian words using icu4c;
+- usage of Slim-like markup language for templates;
+- generation of pdf docs from html templates using pandoc and wkhtmltopdf;
+- usage of custom fonts in html (giving nice pdf);
+- actual invoice template I use for Russian exchange currency control and bank;
+- usage of glide and travis;
+
+Though, it's not rocket science, and I brought all the pieces from elsewhere,
+I just listed it here for myself to know where to find it when I need it again.
 
 ## How to use?
 
