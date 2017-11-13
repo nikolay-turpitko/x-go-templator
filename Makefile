@@ -30,11 +30,12 @@ md-pdf:
 		| tee out/sample.md \
 		| pandoc -s -S \
 		-f markdown \
-		--latex-engine="pdflatex" \
-		-V lang="ru" \
-		-V otherlangs="en" \
-		-V fontenc="T2A" \
-		-V fontfamily="cantarell" \
+		--latex-engine=xelatex \
+		-V lang="russian" \
+		-V otherlangs="english" \
+		-V mainfont="Linux Libertine O" \
+		-V sansfont="Linux Libertine O" \
+		-V monofont="Linux Libertine O" \
 		-V documentclass="paper" \
 		-V papersize="a4" \
 		-V geometry:margin=1.5cm \
