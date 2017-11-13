@@ -35,7 +35,7 @@ md-pdf:
 		-V otherlangs="english" \
 		-V mainfont="Linux Libertine O" \
 		-V sansfont="Linux Libertine O" \
-		-V monofont="Linux Libertine O" \
+		-V monofont="Linux Libertine Mono O" \
 		-V documentclass="paper" \
 		-V papersize="a4" \
 		-V geometry:margin=1.5cm \
