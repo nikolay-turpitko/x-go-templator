@@ -17,7 +17,12 @@ before_install:
     - sudo apt-get -qq update
     - sudo apt-get -y install glide
     - sudo apt-get -y install
-        texlive-full
+        texlive-latex-base
+        texlive-latex-extra
+        texlive-fonts-recommended
+        texlive-fonts-extra
+        texlive-xetex
+        texlive-lang-cyrillic
         pandoc
         wkhtmltopdf
     - sudo texhash

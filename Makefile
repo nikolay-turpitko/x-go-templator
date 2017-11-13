@@ -30,8 +30,11 @@ md-pdf:
 		| tee out/sample.md \
 		| pandoc -s -S \
 		-f markdown \
-		--latex-engine=pdflatex \
-		-V lang=ru \
+		--latex-engine="pdflatex" \
+		-V lang="ru" \
+		-V otherlangs="en" \
+		-V fontenc="T2A" \
+		-V fontfamily="cantarell" \
 		-V documentclass="paper" \
 		-V papersize="a4" \
 		-V geometry:margin=1.5cm \
