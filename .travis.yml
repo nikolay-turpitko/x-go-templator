@@ -20,6 +20,8 @@ before_install:
         texlive-full
         pandoc
         wkhtmltopdf
+    - sudo texhash
+    - sudo fmtutil --all
 install:
     - glide i
 script:
