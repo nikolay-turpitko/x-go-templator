@@ -21,7 +21,7 @@ before_install:
         texlive-latex-extra
         texlive-fonts-recommended
         texlive-xetex
-         texlive-lang-cyrillic
+        texlive-lang-cyrillic
         pandoc
         wkhtmltopdf
 install:
