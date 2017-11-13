@@ -122,18 +122,3 @@ Namely, I used https://www.fontsquirrel.com/tools/webfont-generator, uploaded
 one of free fonts from Ubuntu's /usr/share/fonts/truetype dir, choose an expert
 mode and removed all unused font types and char sets. Than I had to fix font
 family names in downloaded css.
-
-### How to find which cyrillic (T2A) fonts do you have in your local TeX
-
-    # find installed fonts
-    updmap-sys --listmaps | cut -f 2 | cut -f 1 -d . | sort
-
-    # find t2a fonts
-    find /usr/share/texlive/ -path "**/t2a*"
-
-    # TODO: don't know how automate. Look at them and try to guess...
-
-    # use name from first output to check pdf doc and find T2A in it
-    texdoc cantarell
-
-
