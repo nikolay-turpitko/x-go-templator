@@ -57,12 +57,15 @@ I just listed it here for myself to know where to find it when I need it again.
 
 Refer .travis.yml for build requrements and steps.
 
-**Note**: to install ICU lib, you may use script `.build/install-icu4c.sh`.  But I
+**Note:** to install ICU lib, you may use script `.build/install-icu4c.sh`.  But I
 had to remove existing icu-devtools installation, because of conflict (`sudo
 apt purge icu-devtools`).
 
 I borrowed this script and ICU lib binding approach from
 https://github.com/uber-go/icu4go. Refer it for details.
+
+**Note:** pandoc, texlive and wkhtmltopdf are not build requrements, these
+tools used by the script as illustration of possible workflow.
 
 TODO:
 - check if it goes to go/bin
