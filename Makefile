@@ -50,7 +50,7 @@ ace-pdf:
 	@echo "Generating pdf (via html) using ace template..."
 	@echo "Required tools: make, go, wkhtmltopdf"
 	@mkdir -p out
-	@cp sample/ace/stylesheet.css out
+	@cp sample/ace/stylesheet.css sample/ace/some-sign.jpg out
 	@./x-go-templator \
 		-template sample/ace/invoice.ace \
 		-data sample/ace/invoice.yml \

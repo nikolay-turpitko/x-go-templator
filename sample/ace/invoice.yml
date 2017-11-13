@@ -15,8 +15,8 @@ invoice:
   bankDetails:
     beneficiary:
       name: IP IVAN IVANOVICH IVANOV
-      account: 99999999999999999999
-      transitAccount: 88888888888888888888
+      account: "99999999999999999999"
+      transitAccount: "88888888888888888888"
       bankName: Pivkoff Bank
       swift: XXXXXXXXXXX
       bankAddress: Some street, 42, Moscow, Russia
@@ -24,7 +24,7 @@ invoice:
       bankName: SOME BANK, SOMEWHERE IN NEW YORK, NY US
       swift: YYYYYYYYYYY
       bankAddress: SOME BANK, SOMEWHERE IN NEW YORK, NY US
-      account: 888888888
+      account: "888888888"
 
   services:
     - description:

@@ -14,10 +14,10 @@ It illustrates passing data to template via CLI, ENV and YAML.
 {{end}}
 {{end -}}
 
-## ENV vars (with names no more than 5 chars and values no more than 30 chars long)
+## ENV vars (with names between 3 and 5 chars and values between 10 and 30 chars long)
 
 {{range $k, $v := .Env}}
-{{- if and (le (len $k) 5) (le (len $v) 30)}}
+{{- if and (ge (len $k) 3) (le (len $k) 5) (ge (len $v) 10) (le (len $v) 30)}}
 {{$k}}: {{$v}}
 {{end}}
 {{- end}}

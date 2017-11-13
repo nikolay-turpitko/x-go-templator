@@ -82,8 +82,8 @@ func init() {
 	t.AddCardinal(RUB+"/100", "{0} копеек", locales.PluralRuleOther, false)
 }
 
-// Currency returns spelling of the amount in selected locale and currency.
-func Currency(
+// Money returns spelling of the amount in selected locale and currency.
+func Money(
 	l string,
 	n float64,
 	curr CurrencyCode) (translation string, err error) {

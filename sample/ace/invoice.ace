@@ -4,39 +4,35 @@ html
     meta charset=utf-8
     link rel=stylesheet href=stylesheet.css type=text/css charset=utf-8
     = css
-      h1 {
-        color: red;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      table, th, td {
-        border: 1px solid black;
-      }
-      body {
-        font-family: 'liberation_sans_narrow';
-      }
+      h1 { color: red; }
+      .preamble-space { width: 30pt; }
+      table, th, td { text-align: left; }
+      th { white-space: nowrap; }
+      table.striped { border-top: solid 1px #CCC; }
+      table.striped tr.underlined td { border-bottom: solid 1px #CCC; }
+      table.striped tr:nth-child(even) { background: #CCC; }
+      table.striped td.empty { background: #FFF; }
+      table#details { width: 100%; }
+      body { font-family: 'liberation_sans_narrow'; }
   body
 
     h1 Invoice / Счет #{{.Args.Number}}
 
     / Preamble
-
     table
       tr
         th Date of Invoice
         td {{.Args.On}}
+        td.preamble-space
         th Service Agreement date
         td {{.Data.invoice.agreementDate}}
       tr
         th Дата выставления счета
         td {{.Args.On}}
+        td.preamble-space
         th Договор на предоставление услуг от
         td {{.Data.invoice.agreementDate}}
-
     br
-
     table
       tr
         th Service Provider
@@ -50,60 +46,149 @@ html
       tr
         th Заказчик
         td {{.Data.invoice.customer.ru}}
-
     br
 
     / Details
-
-    table
+    table.striped#details
       tr
-        th Service description
-        th Hours
-        th Price per hour
-        th Line Total
-      tr
-        th Наименование услуг
-        th Часов
-        th Стоимость в час
-        th Сумма
+        th
+          | Service description
+          br
+          | Наименование услуг
+        th
+          | Hours
+          br
+          | Часов
+        th
+          | Price per hour
+          br
+          | Стоимость в час
+        th
+          | Line Total
+          br
+          | Сумма
       {{set "total" 0.0}}
       {{range .Data.invoice.services}}
-      tr
-        td {{.description.en}}
-        / Indirect indexing: row in the yaml contains index of arg in cmd line.
-        / This is done to override value in yaml with value from cmd line.
-        {{$h := or (s_atoi (or (index $.Args (print .hours)) "0")) .hours 0}}
-        {{$r := or (s_atoi (or (index $.Args (print .rate)) "0")) .rate 0}}
-        {{$a := or (s_atoi (or (index $.Args (print .amount)) "0")) .amount 0}}
-        {{$s := or $a (m_mul $r $h)}}
-        {{set "total" (m_add $.Vars.total $s)}}
-        td rowspan=2 {{or $h "—"}}
-        td rowspan=2 {{or $r "—"}}
-        td rowspan=2 {{$s}}
-      tr
-        td {{.description.ru}}
+      / Indirect indexing: row in the yaml contains index of arg in cmd line.
+      / This is done to override value in yaml with value from cmd line.
+      {{$h := math_add 0 (or (index $.Args (print .hours)) .hours 0)}}
+      {{$r := math_add 0 (or (index $.Args (print .rate)) .rate 0)}}
+      {{$a := math_add 0 (or (index $.Args (print .amount)) .amount 0)}}
+      {{$s := math_add 0 (or $a (math_mul $r $h))}}
+      {{set "total" (math_add $.Vars.total $s)}}
+      {{if $s}}
+      tr.underlined
+        td
+          | {{.description.en}}
+          br
+          | {{.description.ru}}
+        td {{or $h "—"}}
+        td {{or $r "—"}}
+        td {{$s}}
+      {{end}}
       {{end}}
       tr
-        td rowspan=3
-        td colspan=2 Subtotal / Промежуточный итог
+        td.empty rowspan=3
+        th colspan=2 Subtotal / Промежуточный итог
         td {{.Vars.total}}
       tr
-        td colspan=2 No VAT / Без НДС
+        th colspan=2 No VAT / Без НДС
         td —
       tr
         th colspan=2 TOTAL / ИТОГО
         td {{.Vars.total}}
-
     br
 
     / Spelled out amount
+    table
+      tr
+        th Total sum:
+        td {{fmt_spellMoney "en" .Vars.total "USD"}}
+      tr
+        th Итого:
+        td {{fmt_spellMoney "ru" .Vars.total "USD"}}
 
-    strong Total sum:&nbsp;
-    span {{spellCurrency "en" .Vars.total "USD"}}
+    / Payment terms
+    h2 Payment terms / Условия платежа
+    ul
+      li
+        | By full or partial paying of this invoice the Customer confirms,
+          that all the contract conditions have been utterly fulfilled in due
+          time and with adequate quality.
+        br
+        | Полной или частичной оплатой настоящего Счета Заказчик подтверждает,
+          что все условия договора выполнены в полном объеме, в надлежащие
+          сроки и с надлежащим качеством.
+      li
+        | In case the invoice has not been paid within thirty days from the
+          date of its issuance, the work shall be deemed not performed.
+        br
+        | В случае отсутствии оплаты в течение тридцати дней с момента
+          выставления настоящего Счета, работа считается невыполненной.
+      li
+        | Correspondent bank fee is paid by the Customer.
+        br
+        | Расходы по банковским операциям банков-корреспондентов оплачиваются
+          Заказчиком.
 
+    / Wire transfer info
+    h2 Wire transfer information / Информация для перечисления средств
+    {{with .Data.invoice.bankDetails}}
+    table.striped
+      tr
+        th Beneficiary / Получатель
+        td {{.beneficiary.name}}
+      tr
+        th Beneficiary's Account / Счет получателя
+        td {{.beneficiary.account}}
+      tr
+        th Beneficiary's Transit Account / Транзитный счет получателя
+        td {{.beneficiary.transitAccount}}
+      tr
+        th Beneficiary Bank / Банк получателя
+        td {{.beneficiary.bankName}}
+      tr
+        th Beneficiary's Bank SWIFT / SWIFT банка получателя
+        td {{.beneficiary.swift}}
+      tr
+        th Beneficiary's Bank Address / Адрес банка получателя
+        td {{.beneficiary.bankAddress}}
+      tr
+        th Intermediary / Банк-корреспондент
+        td {{.intermediary.bankName}}
+      tr
+        th Intermediary's Bank SWIFT / SWIFT банка-корреспондента
+        td {{.intermediary.swift}}
+      tr
+        th Intermediary's Bank Address / Адрес банка-корреспондента
+        td {{.intermediary.bankAddress}}
+      tr
+        th Intermediary's Bank Account / Счет в банке-корреспонденте
+        td {{.intermediary.account}}
+    {{end}}
     br
 
-    strong Итого:&nbsp;
-    span {{spellCurrency "ru" .Vars.total "USD"}}
-
+    table
+      tr
+        th Signature
+        td rowspan=2
+          img src=some-sign.jpg height=40pt
+        td {{.Data.invoice.serviceProviderShort.en}}
+      tr
+        th Подпись
+        td {{.Data.invoice.serviceProviderShort.ru}}
     br
+    br
+
+    hr
+    small
+      | For Russian authorities: Составлено во исполнение п.4 ПБУ 1/2008 (в
+        части самостоятельной разработки первичных документов, для которых не
+        предусмотрены унифицированные формы) и в соответствии с требованиями
+        законодательства РФ к первичным документам (ст. 9 Закона о бухучете от
+        21.11.1996 No129-ФЗ, п.п. 12, 13 Положения о бухучете утвержденного
+        Приказом Минфина России от 29.07.1998 No34н, Приказ Минфина РФ N 86н,
+        МНС РФ NoБГ-3-04/430 от 13.08.2002 в части реквизитов для
+        индивидуальных предпринимателей). Использование факсимильного или
+        электронно-цифрового воспроизведения подписи и печати по взаимному
+        соглашению сторон регулируется ГК РФ ст.160, п.2.

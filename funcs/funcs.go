@@ -5,32 +5,32 @@ import (
 	"github.com/nikolay-turpitko/structor/funcs/crypt"
 	"github.com/nikolay-turpitko/structor/funcs/encoding"
 	"github.com/nikolay-turpitko/structor/funcs/goquery"
-	"github.com/nikolay-turpitko/structor/funcs/math"
 	funcs_os "github.com/nikolay-turpitko/structor/funcs/os"
 	"github.com/nikolay-turpitko/structor/funcs/regexp"
 	funcs_str "github.com/nikolay-turpitko/structor/funcs/strings"
 	"github.com/nikolay-turpitko/structor/funcs/use"
 	"github.com/nikolay-turpitko/structor/funcs/xpath"
 
+	"github.com/nikolay-turpitko/x-go-templator/funcs/math"
 	"github.com/nikolay-turpitko/x-go-templator/spell"
 )
 
 var (
 	Pkg = use.FuncMap{
-		"spellCurrency": spell.Currency,
+		"spellMoney": spell.Money,
 	}
 
 	funcs = use.Packages(
-		use.Pkg{Prefix: "b_", Funcs: bytes.Pkg},
-		use.Pkg{Prefix: "c_", Funcs: crypt.Pkg},
-		use.Pkg{Prefix: "e_", Funcs: encoding.Pkg},
-		use.Pkg{Prefix: "g_", Funcs: goquery.Pkg},
-		use.Pkg{Prefix: "m_", Funcs: math.Pkg},
-		use.Pkg{Prefix: "o_", Funcs: funcs_os.Pkg},
-		use.Pkg{Prefix: "r_", Funcs: regexp.Pkg},
-		use.Pkg{Prefix: "s_", Funcs: funcs_str.Pkg},
-		use.Pkg{Prefix: "x_", Funcs: xpath.Pkg},
-		use.Pkg{Funcs: Pkg}, // no prefix
+		use.Pkg{Prefix: "bytes_", Funcs: bytes.Pkg},
+		use.Pkg{Prefix: "crypt_", Funcs: crypt.Pkg},
+		use.Pkg{Prefix: "enc_", Funcs: encoding.Pkg},
+		use.Pkg{Prefix: "gq_", Funcs: goquery.Pkg},
+		use.Pkg{Prefix: "math_", Funcs: math.Pkg},
+		use.Pkg{Prefix: "os_", Funcs: funcs_os.Pkg},
+		use.Pkg{Prefix: "regex_", Funcs: regexp.Pkg},
+		use.Pkg{Prefix: "str_", Funcs: funcs_str.Pkg},
+		use.Pkg{Prefix: "xpath_", Funcs: xpath.Pkg},
+		use.Pkg{Prefix: "fmt_", Funcs: Pkg},
 	)
 )
 

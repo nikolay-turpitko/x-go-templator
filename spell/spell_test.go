@@ -25,31 +25,31 @@ func TestSpellNumberRU(t *testing.T) {
 	assert.Equal("сто сорок два", actual)
 }
 
-func TestSpellCurrencyUS(t *testing.T) {
+func TestSpellMoneyUS(t *testing.T) {
 	assert := assert.New(t)
-	actual, err := Currency("en-US", 1977.22, RUB)
+	actual, err := Money("en-US", 1977.22, RUB)
 	assert.NoError(err)
 	assert.Equal("One thousand nine hundred seventy-seven Russian Rubles 22 kopecks", actual)
-	actual, err = Currency("en-US", 1977.22, USD)
+	actual, err = Money("en-US", 1977.22, USD)
 	assert.NoError(err)
 	assert.Equal("One thousand nine hundred seventy-seven US Dollars 22 cents", actual)
 }
 
-func TestSpellCurrencyRU(t *testing.T) {
+func TestSpellMoneyRU(t *testing.T) {
 	assert := assert.New(t)
-	actual, err := Currency("ru-RU", 1977.22, RUB)
+	actual, err := Money("ru-RU", 1977.22, RUB)
 	assert.NoError(err)
 	assert.Equal("Одна тысяча девятьсот семьдесят семь рублей 22 копейки", actual)
 
-	actual, err = Currency("ru-RU", 1977.22, USD)
+	actual, err = Money("ru-RU", 1977.22, USD)
 	assert.NoError(err)
 	assert.Equal("Одна тысяча девятьсот семьдесят семь долларов США 22 цента", actual)
 
-	actual, err = Currency("ru-RU", 42.01, USD)
+	actual, err = Money("ru-RU", 42.01, USD)
 	assert.NoError(err)
 	assert.Equal("Сорок два доллара США 01 цент", actual)
 
-	actual, err = Currency("ru-RU", 42.01, RUB)
+	actual, err = Money("ru-RU", 42.01, RUB)
 	assert.NoError(err)
 	assert.Equal("Сорок два рубля 01 копейка", actual)
 }
