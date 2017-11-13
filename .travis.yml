@@ -31,4 +31,4 @@ before_install:
 install:
     - glide i
 script:
-    - make clan test build
+    - make clean test build
