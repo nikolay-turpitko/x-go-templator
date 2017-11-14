@@ -17,21 +17,19 @@ before_install:
     - sudo apt-get -qq update
     - sudo apt-get -y install glide
     - sudo apt-get -y install
-        texlive-latex-base
-        texlive-latex-extra
-        texlive-fonts-recommended
-        texlive-fonts-extra
-        texlive-lang-cyrillic
-        texlive-luatex
-        pandoc
         wkhtmltopdf
 
+# Below are requirements to create PDF from templates (for either `make md-pdf` or `make ace-pdf` samples). This command can be used on local Ubuntu to run samples. I tested them on my Ubuntu 16.04.
+#
+# I was not able to run these samples on Travis. `wkhtmltopdf` required connection to X server, which is not easily (if at all) available on Travis.
+#
 # TODO: for some unclear reason tex won't work on Travis.
 # I tried use it (via pandoc) with pdflatex and xelatex engines.
 # With pdflatex I had troubles with babel, which won't use Russian language setting.
 # With xelatex it fails with some strange error (TeX capacity exceeded, sorry
 # [input stack size=5000]).
 #
+#    - sudo apt-get -y install
 #        texlive-latex-base
 #        texlive-latex-extra
 #        texlive-fonts-recommended
@@ -39,8 +37,14 @@ before_install:
 #        texlive-lang-cyrillic
 #        texlive-xetex
 #        pandoc
+#        wkhtmltopdf
 install:
     - glide i
+before_script:
+    # Virtual X server needed to execute wkhtmltopdf on Travis,
+    # you don't need it for local tests.
+    - "export DISPLAY=:99.0"
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3 # give xvfb some time to start
 script:
     - make clean test build ace-pdf
-#    - make
