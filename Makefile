@@ -10,7 +10,7 @@ all: clean test build md-pdf ace-pdf
 
 clean:
 	@-rm ./x-go-templator 2> /dev/null || :
-@-rm -r ./out 2> /dev/null || :
+	@-rm -r ./out 2> /dev/null || :
 
 test:
 	@go test -v $$(glide nv)

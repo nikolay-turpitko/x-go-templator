@@ -90,7 +90,7 @@ html
           | {{.description.ru}}
         td.right {{or $h "—"}}
         td.right {{or $r "—"}}
-        td.right {{$s}}
+        td.right {{printf "%.2f" $s}}
       {{end}}
       {{end}}
       tr
@@ -104,13 +104,13 @@ html
               th Итого:
               td {{fmt_spellMoney "ru" .Vars.total "USD"}}
         th colspan=2 Subtotal / Промежуточный итог
-        td.right {{.Vars.total}}
+        td.right {{printf "%.2f" .Vars.total}}
       tr
         th colspan=2 No VAT / Без НДС
         td.right —
       tr
         th colspan=2 TOTAL / ИТОГО
-        td.right {{.Vars.total}}
+        td.right {{printf "%.2f" .Vars.total}}
     br
 
     / Payment terms
@@ -178,7 +178,7 @@ html
       tr
         th Signature
         td.sign rowspan=2
-          img src=some-sign.jpg height=40pt
+          img src=some-sign.jpg height=50px
         td {{.Data.invoice.serviceProviderShort.en}}
       tr
         th Подпись

@@ -184,8 +184,4 @@ family names in downloaded css.
 - [ ] add template function to read data from stdin (without `os_exec "cat"`);
 - [ ] add flag to change template delims (to use tex template);
 - [ ] try to generate tex file from template;
-- [ ] calculate billed hours by the csv log (using csvkit);
-- [ ] automatically number invoices (store last generated invoice number);
-- [ ] use invoice date (number?) in the output file name;
-- [ ] calculate date of the invoice if not provided (in the template, without bash);
 
