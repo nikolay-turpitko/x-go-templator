@@ -22,10 +22,25 @@ before_install:
         texlive-fonts-recommended
         texlive-fonts-extra
         texlive-lang-cyrillic
-        texlive-xetex
+        texlive-luatex
         pandoc
         wkhtmltopdf
+
+# TODO: for some unclear reason tex won't work on Travis.
+# I tried use it (via pandoc) with pdflatex and xelatex engines.
+# With pdflatex I had troubles with babel, which won't use Russian language setting.
+# With xelatex it fails with some strange error (TeX capacity exceeded, sorry
+# [input stack size=5000]).
+#
+#        texlive-latex-base
+#        texlive-latex-extra
+#        texlive-fonts-recommended
+#        texlive-fonts-extra
+#        texlive-lang-cyrillic
+#        texlive-xetex
+#        pandoc
 install:
     - glide i
 script:
-    - make
+    - make clean test build ace-pdf
+#    - make
