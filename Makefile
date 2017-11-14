@@ -30,7 +30,7 @@ md-pdf:
 		| tee out/sample.md \
 		| pandoc -s -S \
 		-f markdown \
-		--latex-engine=lualatex \
+		--latex-engine=xelatex \
 		-V lang="russian" \
 		-V otherlangs="english" \
 		-V mainfont="Linux Libertine O" \
