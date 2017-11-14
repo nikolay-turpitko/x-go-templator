@@ -7,6 +7,7 @@ html
       h1 { color: red; }
       .preamble-space { width: 30pt; }
       table, th, td { text-align: left; }
+      th, td { padding: 0 5pt 0 5pt; }
       th { white-space: nowrap; }
       table.striped { border-top: solid 1px #CCC; }
       table.striped tr.underlined td { border-bottom: solid 1px #CCC; }
@@ -14,6 +15,8 @@ html
       table.striped td.empty { background: #FFF; }
       table#details { width: 100%; }
       body { font-family: 'liberation_sans_narrow'; }
+      .right { text-align:right;  }
+      td.sign { width: 200pt; text-align: center; }
   body
 
     h1 Invoice / Счет #{{.Args.Number}}
@@ -22,16 +25,16 @@ html
     table
       tr
         th Date of Invoice
-        td {{.Args.On}}
+        td.right {{.Args.On}}
         td.preamble-space
         th Service Agreement date
-        td {{.Data.invoice.agreementDate}}
+        td.right {{.Data.invoice.agreementDate}}
       tr
         th Дата выставления счета
-        td {{.Args.On}}
+        td.right {{.Args.On}}
         td.preamble-space
         th Договор на предоставление услуг от
-        td {{.Data.invoice.agreementDate}}
+        td.right {{.Data.invoice.agreementDate}}
     br
     table
       tr
@@ -82,21 +85,21 @@ html
           | {{.description.en}}
           br
           | {{.description.ru}}
-        td {{or $h "—"}}
-        td {{or $r "—"}}
-        td {{$s}}
+        td.right {{or $h "—"}}
+        td.right {{or $r "—"}}
+        td.right {{$s}}
       {{end}}
       {{end}}
       tr
         td.empty rowspan=3
         th colspan=2 Subtotal / Промежуточный итог
-        td {{.Vars.total}}
+        td.right {{.Vars.total}}
       tr
         th colspan=2 No VAT / Без НДС
-        td —
+        td.right —
       tr
         th colspan=2 TOTAL / ИТОГО
-        td {{.Vars.total}}
+        td.right {{.Vars.total}}
     br
 
     / Spelled out amount
@@ -171,7 +174,7 @@ html
     table
       tr
         th Signature
-        td rowspan=2
+        td.sign rowspan=2
           img src=some-sign.jpg height=40pt
         td {{.Data.invoice.serviceProviderShort.en}}
       tr
