@@ -58,7 +58,7 @@ Just a couple of interesting usages of predefined functions:
 - `fmt_spellMoney "en" .Vars.total "USD"` - allows to spell money amount in
   human-readable text;
 - `set myvar 42` - allows to introduce custom variable and give it a value, you
-  may use it later like `.Vars.myvar`;
+  may use it later like `.Vars.myvar` (useful within range loops);
 - `os_exec "./my-script" arg1 arg2 | set var` - allows to run arbitrary OS
   process (can be "/bin/bash", for example) and use it's output;
 - `os_readTxtFile "./my-file"` - allows to process text files;
@@ -97,6 +97,8 @@ I just listed it here for myself to know where to find it when I need it again.
     glide i
     ./.buld/install-icu4c.sh
     make clean test build
+    # or, to install it into $GOPATH/bin
+    make install
 
 Refer .travis.yml for build requirements and steps.
 
@@ -174,3 +176,16 @@ Namely, I used https://www.fontsquirrel.com/tools/webfont-generator, uploaded
 one of free fonts from Ubuntu's /usr/share/fonts/truetype dir, choose an expert
 mode and removed all unused font types and char sets. Than I had to fix font
 family names in downloaded css.
+
+## Some random ideas (TODO):
+
+- [ ] add template function to load data from csv file (+sample);
+- [ ] add template function to load data from DB connection (+sample);
+- [ ] add template function to read data from stdin (without `os_exec "cat"`);
+- [ ] add flag to change template delims (to use tex template);
+- [ ] try to generate tex file from template;
+- [ ] calculate billed hours by the csv log (using csvkit);
+- [ ] automatically number invoices (store last generated invoice number);
+- [ ] use invoice date (number?) in the output file name;
+- [ ] calculate date of the invoice if not provided (in the template, without bash);
+

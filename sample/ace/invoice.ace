@@ -4,20 +4,23 @@ html
     meta charset=utf-8
     link rel=stylesheet href=stylesheet.css type=text/css charset=utf-8
     = css
-      h1 { color: red; }
       .preamble-space { width: 30pt; }
       table, th, td { text-align: left; }
       th, td { padding: 0 5pt 0 5pt; }
       th { white-space: nowrap; }
-      table.striped { border-top: solid 1px #CCC; }
-      table.striped tr.underlined td { border-bottom: solid 1px #CCC; }
-      table.striped tr:nth-child(even) { background: #CCC; }
-      table.striped td.empty { background: #FFF; }
+      table.striped { border-top: solid 1px #CCC; border-bottom: solid 1px #CCC; }
+      table.striped>*>tr:nth-child(odd) { background: #EEE; }
+      table.striped td.total { background: #FFF; border-top: solid 1px #CCC; }
       table#details { width: 100%; }
+      table#details>*>tr>th { background: #CCC; }
       body { font-family: 'liberation_sans_narrow'; }
       .right { text-align:right;  }
       td.sign { width: 200pt; text-align: center; }
+      .footer { position: fixed; left: 0; bottom: 0; width: 100%; }
   body
+
+    {{$on := time_parse time_const.RFC3339Date .Args.On}}
+    {{$agreementDate := time_parse time_const.RFC3339Date .Data.invoice.agreementDate}}
 
     h1 Invoice / Счет #{{.Args.Number}}
 
@@ -25,16 +28,16 @@ html
     table
       tr
         th Date of Invoice
-        td.right {{.Args.On}}
+        td.right {{$on.Format time_const.DateUS}}
         td.preamble-space
         th Service Agreement date
-        td.right {{.Data.invoice.agreementDate}}
+        td.right {{$agreementDate.Format time_const.DateUS}}
       tr
         th Дата выставления счета
-        td.right {{.Args.On}}
+        td.right {{$on.Format time_const.DateRU}}
         td.preamble-space
         th Договор на предоставление услуг от
-        td.right {{.Data.invoice.agreementDate}}
+        td.right {{$agreementDate.Format time_const.DateRU}}
     br
     table
       tr
@@ -80,7 +83,7 @@ html
       {{$s := math_add 0 (or $a (math_mul $r $h))}}
       {{set "total" (math_add $.Vars.total $s)}}
       {{if $s}}
-      tr.underlined
+      tr
         td
           | {{.description.en}}
           br
@@ -91,7 +94,15 @@ html
       {{end}}
       {{end}}
       tr
-        td.empty rowspan=3
+        td.total rowspan=3
+          / Spelled out amount
+          table
+            tr
+              th Total sum:
+              td {{fmt_spellMoney "en" .Vars.total "USD"}}
+            tr
+              th Итого:
+              td {{fmt_spellMoney "ru" .Vars.total "USD"}}
         th colspan=2 Subtotal / Промежуточный итог
         td.right {{.Vars.total}}
       tr
@@ -101,15 +112,6 @@ html
         th colspan=2 TOTAL / ИТОГО
         td.right {{.Vars.total}}
     br
-
-    / Spelled out amount
-    table
-      tr
-        th Total sum:
-        td {{fmt_spellMoney "en" .Vars.total "USD"}}
-      tr
-        th Итого:
-        td {{fmt_spellMoney "ru" .Vars.total "USD"}}
 
     / Payment terms
     h2 Payment terms / Условия платежа
@@ -170,6 +172,7 @@ html
         td {{.intermediary.account}}
     {{end}}
     br
+    br
 
     table
       tr
@@ -180,18 +183,17 @@ html
       tr
         th Подпись
         td {{.Data.invoice.serviceProviderShort.ru}}
-    br
-    br
 
-    hr
-    small
-      | For Russian authorities: Составлено во исполнение п.4 ПБУ 1/2008 (в
-        части самостоятельной разработки первичных документов, для которых не
-        предусмотрены унифицированные формы) и в соответствии с требованиями
-        законодательства РФ к первичным документам (ст. 9 Закона о бухучете от
-        21.11.1996 No129-ФЗ, п.п. 12, 13 Положения о бухучете утвержденного
-        Приказом Минфина России от 29.07.1998 No34н, Приказ Минфина РФ N 86н,
-        МНС РФ NoБГ-3-04/430 от 13.08.2002 в части реквизитов для
-        индивидуальных предпринимателей). Использование факсимильного или
-        электронно-цифрового воспроизведения подписи и печати по взаимному
-        соглашению сторон регулируется ГК РФ ст.160, п.2.
+    .footer
+      hr
+      small
+        | For Russian authorities: Составлено во исполнение п.4 ПБУ 1/2008 (в
+          части самостоятельной разработки первичных документов, для которых не
+          предусмотрены унифицированные формы) и в соответствии с требованиями
+          законодательства РФ к первичным документам (ст. 9 Закона о бухучете от
+          21.11.1996 No129-ФЗ, п.п. 12, 13 Положения о бухучете утвержденного
+          Приказом Минфина России от 29.07.1998 No34н, Приказ Минфина РФ N 86н,
+          МНС РФ NoБГ-3-04/430 от 13.08.2002 в части реквизитов для
+          индивидуальных предпринимателей). Использование факсимильного или
+          электронно-цифрового воспроизведения подписи и печати по взаимному
+          соглашению сторон регулируется ГК РФ ст.160, п.2.

@@ -18,6 +18,9 @@ test:
 build:
 	@go build
 
+install: clean test
+	@go install
+
 md-pdf:
 	@echo
 	@echo "Generating pdf using markdown template..."
@@ -55,8 +58,8 @@ ace-pdf:
 		-template sample/ace/invoice.ace \
 		-data sample/ace/invoice.yml \
 		Number=5 \
-		On=$$(date --rfc-3339=date) \
-		BilledHours=$$(expr 8 \* 26) \
+		On=$$(date -d "+1 month -$$(($$(date +%d)-1)) days" --rfc-3339=date) \
+		BilledHours=$$(expr 8 \* 20) \
 		AdditionalAmount=500 \
 		> out/invoice.html
 	@wkhtmltopdf out/invoice.html \
