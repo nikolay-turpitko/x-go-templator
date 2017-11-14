@@ -14,18 +14,57 @@ I'm doing it for my own needs and fun. PRs are welcome, but I have no time
 (and intention) for providing good docs and support.
 
 Think about it like about Go `text/template` engine plus YAML file parser
-wrapped as a CLI tool. Not much more than that.
+wrapped as a CLI tool. Not much more than that. But it's a quite powerful
+combination, capable to replace such tools as Hugo (static web site generator)
+or Jasper Reports for simple use cases (and much simpler to install and use in
+scripts). I especially like to use it with ACE templates, which give concise
+and light Slim-like syntax. What is more important for me, is that I can easily
+extend it however I need.
+
+You work with it as follows.
 
 You give it a template file, a file with less volatile data in the YAML and
 more volatile data via CLI args and ENV variables.
 
 Template accesses both CLI args and YAML content via embedded scripting
-language and uses them to fill report.
+language and uses them to fill report. To be more precise, tool collect all
+ENV and args to the key-value maps and puts them into template's script context.
 
-Report goes to stdout, you redirect it whenever you like.
+You use construction such as `{{.Args.myarg}}`, `{{.Env.HOME}}`,
+`{{.Data.somekey}}`, `{{.Vars.myvar}}` to access CLI arguments, environment
+variables, values from YAML file and your own script variables respectively.
+
+To pass CLI arguments to your template, you put them in form of `key=value` on
+the command line after all the program's CLI flags.
+
+You may access complex data fields with "dot" syntax like `v.k1.k2` or with
+`index` function like `index v k1 k2` (see Go docs on `text/template` for more
+details).
 
 There are some predefined functions, available within templates. You may use
 them to manipulate available data.
+
+You may invoke pre-defined functions, passing them arguments, like `myfunc arg1
+arg2`. You may use functions, defined by the `text/template` or `html/template`
+engines (depending on which one you use), plus bunch of functions, provided by
+the tool in a kind of "packages" (similar prefix). I'm a bit lazy to create
+documentation about these functions. You may find examples of usage in my
+samples and use a link to source code to find out what else is available.
+
+Just a couple of interesting usages of predefined functions:
+
+- `math_add x y`, `math_mul a b`, ... - allow to make simple math inside
+  template;
+- `fmt_spellMoney "en" .Vars.total "USD"` - allows to spell money amount in
+  human-readable text;
+- `set myvar 42` - allows to introduce custom variable and give it a value, you
+  may use it later like `.Vars.myvar`;
+- `os_exec "./my-script" arg1 arg2 | set var` - allows to run arbitrary OS
+  process (can be "/bin/bash", for example) and use it's output;
+- `os_readTxtFile "./my-file"` - allows to process text files;
+
+Report goes to stdout, you redirect it whenever you like. I like to redirect it
+to the input of `pandoc` or `wkhtmltopdf` to create PDF documents from it.
 
 And with this you may be as creative in your templates as you like.
 
@@ -53,23 +92,36 @@ I just listed it here for myself to know where to find it when I need it again.
 
 ### Build & Install
 
-    go get github.com/nikolay-turpitko/x-go-templator
+    go get -d github.com/nikolay-turpitko/x-go-templator
+    cd $GOPATH/src/github.com/nikolay-turpitko/x-go-templator
+    glide i
+    ./.buld/install-icu4c.sh
+    make clean test build
 
-Refer .travis.yml for build requrements and steps.
+Refer .travis.yml for build requirements and steps.
 
-**Note:** to install ICU lib, you may use script `.build/install-icu4c.sh`.  But I
-had to remove existing icu-devtools installation, because of conflict (`sudo
-apt purge icu-devtools`).
+**Note:** to install ICU lib, you may use script `.build/install-icu4c.sh`.
+But I had to remove existing icu-devtools installation, because of conflict
+(`sudo apt purge icu-devtools`).
 
 I borrowed this script and ICU lib binding approach from
 https://github.com/uber-go/icu4go. Refer it for details.
 
-**Note:** pandoc, texlive and wkhtmltopdf are not build requrements, these
+**Note:** pandoc, texlive and wkhtmltopdf are not build requirements, these
 tools used by the script as illustration of possible workflow.
 
-TODO:
-- check if it goes to go/bin
-- probably, add a link to binary, built by Travis?
+**Note:** I experimented with TeX sample (`make md-pdf`) on Travis for an hours
+and was finally able to run it only with `lualatex` engine, though it works
+perfectly well at my local Ubuntu 16.04 with either `pdflatex`, `xelatex` or
+`lualatex`.
+
+Issues I had with different engines on Travis:
+- pdflatex: babel don't accept Russian language setting;
+- xelatex: fails with some strange error (TeX capacity exceeded, sorry [input
+  stack size=5000]).
+
+Currently I'm not going to provide pre-build binary or package, it's too many
+hustle for such a simple tool.
 
 ### Create a template file and (optionally) a data file
 

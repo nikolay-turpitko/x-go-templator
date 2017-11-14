@@ -8,6 +8,7 @@ env:
     ICU_LIB: /usr
 sudo: required
 before_install:
+    
     # Build requirements.
     - sudo apt-get -q update
     - sudo apt-get -y purge
@@ -30,24 +31,6 @@ before_install:
         pandoc
         wkhtmltopdf
 
-# Note: I was not able to run TeX sample (`make md-pdf`) on
-# Travis, though it works perfectly at my local Ubuntu 16.04.
-#
-# I tried to use TeX (via pandoc) with pdflatex, xelatex and luatex engines:
-# - pdflatex: babel don't accept Russian language setting;
-# - xelatex: fails with some strange error (TeX capacity exceeded, sorry [input
-#   stack size=5000]).
-# - lualatex:
-#
-#    - sudo apt-get -y install
-#        texlive-latex-base
-#        texlive-latex-extra
-#        texlive-fonts-recommended
-#        texlive-fonts-extra
-#        texlive-lang-cyrillic
-#        texlive-xetex
-#        pandoc
-#        wkhtmltopdf
 install:
     - glide i
 before_script:
@@ -58,4 +41,3 @@ before_script:
     - sleep 3 # give xvfb some time to start
 script:
     - make
-      # - make clean test build ace-pdf
