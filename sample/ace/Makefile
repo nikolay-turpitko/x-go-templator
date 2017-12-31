@@ -1,10 +1,11 @@
+.PHONY: usage invoice
 
 # Usage samples:
 #
 # make n=5 date=2017-12-01 d=20
 # make h=160
 # make d=20 h=4
-# make w="Sa\|Su"
+# make w="Sa|Su"
 #
 # where
 # n - invoice number
@@ -18,7 +19,7 @@ usage:
 	@echo -e "\n \
 		Usage:\n \
 		\n \
-		make invoice [n=N] [date=YYYY-MM-DD] [d=N] [h=N] [w=S] [fa=N]\n \
+		make invoice [n=N] [date=YYYY-MM-DD] [d=N] [h=N] [w=Sa] [fa=N]\n \
 		\n \
 		where: \n \
 		n - invoice number (default calculated by perviouse invoice file)\n \
@@ -35,7 +36,7 @@ usage:
 		\n \
 		Example:\n \
 		\n \
-		make invoice n=7 w=\"Sa\\|Su\"\n"
+		make invoice n=7 w=\"Sa|Su\"\n"
 
 SHELL := /bin/bash
 

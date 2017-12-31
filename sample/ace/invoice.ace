@@ -21,6 +21,7 @@ html
 
     {{$on := time_parse time_const.RFC3339Date .Args.On}}
     {{$agreementDate := time_parse time_const.RFC3339Date .Data.invoice.agreementDate}}
+    {{$usDate := "02 January 2006"}}
 
     h1 Invoice / Счет #{{.Args.Number}}
 
@@ -28,16 +29,16 @@ html
     table
       tr
         th Date of Invoice
-        td.right {{$on.Format time_const.DateUS}}
+        td {{$on.Format $usDate}}
         td.preamble-space
         th Service Agreement date
-        td.right {{$agreementDate.Format time_const.DateUS}}
+        td {{$agreementDate.Format $usDate}}
       tr
         th Дата выставления счета
-        td.right {{$on.Format time_const.DateRU}}
+        td {{$on.Format time_const.DateRU}}
         td.preamble-space
         th Договор на предоставление услуг от
-        td.right {{$agreementDate.Format time_const.DateRU}}
+        td {{$agreementDate.Format time_const.DateRU}}
     br
     table
       tr
@@ -103,13 +104,13 @@ html
             tr
               th Итого:
               td {{fmt_spellMoney "ru" .Vars.total "USD"}}
-        th colspan=2 Subtotal / Промежуточный итог
+        th.right colspan=2 Subtotal / Промежуточный итог
         td.right {{printf "%.2f" .Vars.total}}
       tr
-        th colspan=2 No VAT / Без НДС
+        th.right colspan=2 No VAT / Без НДС
         td.right —
       tr
-        th colspan=2 TOTAL / ИТОГО
+        th.right colspan=2 TOTAL / ИТОГО
         td.right {{printf "%.2f" .Vars.total}}
     br
 
@@ -178,7 +179,7 @@ html
       tr
         th Signature
         td.sign rowspan=2
-          img src=some-sign.jpg height=50px
+          img src=some-sign.jpg height=60px
         td {{.Data.invoice.serviceProviderShort.en}}
       tr
         th Подпись
