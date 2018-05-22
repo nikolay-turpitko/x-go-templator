@@ -1,11 +1,13 @@
 .PHONY: usage invoice
 
+SHELL := /bin/bash
+
 # Usage samples:
 #
-# make n=5 date=2017-12-01 d=20
-# make h=160
-# make d=20 h=4
-# make w="Sa|Su"
+# make invoice n=5 date=2017-12-01 d=20
+# make invoice h=160
+# make invoice d=20 h=4
+# make invoice w="Sa|Su"
 #
 # where
 # n - invoice number
@@ -38,13 +40,11 @@ usage:
 		\n \
 		make invoice n=7 w=\"Sa|Su\"\n"
 
-SHELL := /bin/bash
-
 # Find a file with name like "Invoice-NN.pdf", where NN is like 01, 02, ...
 # Extract number NN from it's name
 # Increment NN
 # Use it as a new invoice number
-nn := $(shell v=$$(find . -name "Invoice-*.pdf" -printf "%f\n" | sort | tail -n 1); echo $${v//[^0-9]/})
+nn := $(shell v=$$(find . -maxdepth 1 -name "Invoice-*.pdf" -printf "%f\n" | sort | tail -n 1); echo $${v//[^0-9]/})
 nn := $(shell printf %02d $$(expr ${nn} + 1))
 n ?= ${nn}
 
@@ -56,9 +56,9 @@ date ?= $(shell date -d "+1 month -$$(($$(date +%d)-1)) days" --rfc-3339=date)
 # Note: working days are calculated for the month before invoice date.
 # For example, if invoice is prepared as of 01 Dec, then Nov is used.
 ifdef w
-override d := $(shell m=$$(date -d "-1 day ${date}" +"%m %Y"); expr $$(cal $$m | awk 'NF {DAYS = $$NF}; END {print DAYS}') - $$(ncal -M $$m | awk '/$w/ {n +=NF-1}; END {print n}'))
+override d := $(shell a=$$(date -d "-1 day ${date}" +"%d"); m=$$(date -d "-1 day ${date}" +"%m %Y"); b=$$(ncal -h -M $$m | awk '/$w/ {n += NF-1}; END {print n}'); expr $$a - $$b)
 # To use the same month as in the invoice:
-#override d := $(shell m=$$(date -d "${date}" +"%m %Y"); expr $$(cal $$m | awk 'NF {DAYS = $$NF}; END {print DAYS}') - $$(ncal -M $$m | awk '/$w/ {n +=NF-1}; END {print n}'))
+#override d := $(shell a=$$(date -d "+1 month -1 days ${date}" +"%d"); m=$$(date -d "${date}" +"%m %Y"); b=$$(ncal -h -M $$m | awk '/$w/ {n +=NF-1}; END {print n}'); expr $$a - $$b)
 endif
 
 
