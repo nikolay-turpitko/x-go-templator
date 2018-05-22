@@ -5,4 +5,6 @@ tar -xf icu4c-60_1-src.tgz
 cd icu/source
 ./configure --prefix=/usr && make
 sudo make install
+sudo chmod a+rx /usr/lib/icu/60.1
+sudo chmod a+rx /usr/include/unicode
 cd $cwd

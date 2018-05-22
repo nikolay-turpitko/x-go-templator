@@ -95,7 +95,7 @@ I just listed it here for myself to know where to find it when I need it again.
     go get -d github.com/nikolay-turpitko/x-go-templator
     cd $GOPATH/src/github.com/nikolay-turpitko/x-go-templator
     glide i
-    ./.buld/install-icu4c.sh
+    .build/install-icu4c.sh
     make clean test build
     # or, to install it into $GOPATH/bin
     make install
