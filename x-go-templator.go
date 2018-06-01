@@ -38,7 +38,7 @@ how to parse input data:
 .*    -> "text/template"
 
 Currently, the only supported format for data files is YAML.
-If "-" (dash simbol) in the "-data" flag means data is to be read from stdin.
+Symbol "-" (dash) in the "-data" flag means data is to be read from stdin.
 
 Flags supported by the program:
 
@@ -134,18 +134,14 @@ Flags supported by the program:
 		})
 	case ".html":
 		log.Println("Use html engine.")
-		tpl, e := htmltemplate.ParseFiles(args.templateFileName)
-		err = e
-		if err == nil {
-			t = tpl.Funcs(htmltemplate.FuncMap(funcs))
-		}
+		t, err = htmltemplate.New(filepath.Base(args.templateFileName)).
+			Funcs(htmltemplate.FuncMap(funcs)).
+			ParseFiles(args.templateFileName)
 	default:
-		log.Println("Use html engine.")
-		tpl, e := texttemplate.ParseFiles(args.templateFileName)
-		err = e
-		if err == nil {
-			t = tpl.Funcs(texttemplate.FuncMap(funcs))
-		}
+		log.Println("Use text engine.")
+		t, err = texttemplate.New(filepath.Base(args.templateFileName)).
+			Funcs(texttemplate.FuncMap(funcs)).
+			ParseFiles(args.templateFileName)
 	}
 	if err != nil {
 		log.Fatal("Cannot parse template. ", err)
