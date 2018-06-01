@@ -2,16 +2,30 @@
 
 # x-go-templator
 
-## What?
+**TL;DR** It's an experimental project (so, "x-" prefix in the name).
+I'm doing it for my own needs and fun. PRs are welcome, but I have no time
+(and intention) for providing good docs and support.
+
+**NOTE:** When I started it some time ago, there were no so much similar tools for the task,
+otherwise I'd use one. If you do not need `ace` templates or spelling numbers
+into words with `icu4c` or some other custom template functions, absent in other
+projects, you may like more lightweight tool, or more feature full one, like
+one of these:
+
+- https://github.com/tsg/gotpl
+
+- https://github.com/dreadatour/go-cli-template
+
+- https://github.com/hairyhenderson/gomplate
+
+This project is more havyweight due to usage of `icu4c`.
+
+## What is it?
 
 **x-go-templator** is a tool to generate simple documents using templates.
 
 I wrote it to automate creation of invoices. But it is able to create another
 types of simple one or several page reports as well.
-
-**TL;DR** It's an experimental project (so, "x-" prefix in the name).
-I'm doing it for my own needs and fun. PRs are welcome, but I have no time
-(and intention) for providing good docs and support.
 
 Think about it like about Go `text/template` engine plus YAML file parser
 wrapped as a CLI tool. Not much more than that. But it's a quite powerful
