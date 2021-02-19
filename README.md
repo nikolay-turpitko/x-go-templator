@@ -20,6 +20,9 @@ one of these:
 
 This project is more havyweight due to usage of `icu4c`.
 
+**NOTE:** Finally, I found a time to create a [lighter version of similar tool for the same needs]
+(https://gitlab.com/nikolay-turpitko/gotmpl) and now can abandon this one in favor of a new one.
+
 ## What is it?
 
 **x-go-templator** is a tool to generate simple documents using templates.
